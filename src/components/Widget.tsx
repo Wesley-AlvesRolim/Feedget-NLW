@@ -15,7 +15,7 @@ export function Widget() {
       >
         <ChatTeardropDots className="h-6 w-6" />
 
-        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-linear">
+        <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-focus:max-w-xs transition-all duration-500 ease-linear">
           <span className="pl-2">Feedback</span>
         </span>
       </Popover.Button>
