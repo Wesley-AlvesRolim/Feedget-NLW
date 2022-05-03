@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { ArrowLeft } from "phosphor-react";
 import { feedbackTypes, FeedbackTypes } from "..";
 import { CloseWidgetButton } from "../../CloseWidgetButton";
@@ -14,7 +14,13 @@ export function FeedbackContentStep({
   onFeedbackRestartRequested,
 }: FeedbackContentStepProps) {
   const [screenshot, setScreenshot] = useState<string | null>(null);
+  const [comment, setComment] = useState("");
   const currentFeedbackTypeStep = feedbackTypes[feedbackType];
+
+  function handleSubmitFeedback(event: FormEvent) {
+    event.preventDefault();
+    console.log({ comment, screenshot });
+  }
 
   return (
     <>
@@ -37,8 +43,10 @@ export function FeedbackContentStep({
         </span>
         <CloseWidgetButton />
       </header>
-      <form className="w-full my-4">
+
+      <form className="w-full my-4" onSubmit={handleSubmitFeedback}>
         <textarea
+          onChange={(event) => setComment(event.target.value)}
           placeholder="Conte com detalhes o que está acontecendo..."
           className="sm:min-w-[304px] w-full min-h-[112px] rounded-md text-sm text-zinc-100 bg-transparent border-zinc-600 placeholder-zinc-400 resize-none focus:border-brand-500 focus:ring-brand-500 focus:ring-1"
         />
@@ -51,7 +59,8 @@ export function FeedbackContentStep({
 
           <button
             type="submit"
-            className="p-2 border-transparent rounded-md text-sm bg-brand-500 flex-1 justify-center items-center hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 transition-colors"
+            disabled={comment.length === 0}
+            className="p-2 border-transparent rounded-md text-sm bg-brand-500 flex-1 justify-center items-center hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-50  disabled:hover:bg-brand-500 transition-colors"
           >
             Enviar Feedback
           </button>
